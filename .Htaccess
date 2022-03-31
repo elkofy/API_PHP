@@ -1,0 +1,7 @@
+RewriteEngine On # Activer le module Rewrite
+
+Options +FollowSymlinks
+RewriteRule ^produits produits.php [L]
+RewriteRule ^users users.php [L]
+RewriteRule ^user/(\d+)$ users.php?id=$1 [NC,L]
+RewriteRule ^produit/(\d+)$ produits.php?id=$1 [NC,L]
