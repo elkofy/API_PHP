@@ -1,5 +1,6 @@
 <?php
 include("db_connect.php");
+include("randomToken.php");
 $request_method = $_SERVER["REQUEST_METHOD"];
 
 function getUsers()
@@ -39,12 +40,14 @@ function insertUser()
     //     "created_at": "2019-01-01 00:00:00",
     //     "modified": "2019-01-01 00:00:00"
     // }
-    $query = "INSERT INTO user (nom, prenom, token, role, created_at, modified) VALUES ('" . $data['nom'] . "', '" . $data['prenom'] . "', '" . $data['token'] . "', '" . $data['role'] . "', '" . $data['created_at'] . "', '" . $data['modified'] . "')";
+    $query = "INSERT INTO user (nom, prenom, token, role, created_at, modified) VALUES ('" . $data['nom'] . "', '" . $data['prenom'] . "', '" . generateRandomString() . "', '" . $data['role'] . "', '" . $data['created_at'] . "', '" . $data['modified'] . "')";
     $result = mysqli_query($conn, $query);
     if ($result) {
         $response = array(
             'status' => 1,
-            'message' => 'User Added Successfully.'
+            'message' => 'User Added Successfully.',
+            'data' => $data
+
         );
     } else {
         $response = array(
@@ -70,14 +73,15 @@ function updateUser($id)
     //     "modified": "2019-01-01 00:00:00"
     // }
 
-    $query = "UPDATE user SET nom = '" . $data['nom'] . "', prenom = '" . $data['prenom'] . "', token = '" . $data['token'] . "', role = '" . $data['role'] . "', created_at = '" . $data['created_at'] . "', modified = '" . $data['modified'] . "' WHERE id = $id";
+    $query = "UPDATE user SET nom = '" . $data['nom'] . "', prenom = '" . $data['prenom'] . "', role = '" . $data['role'] . "', created_at = '" . $data['created_at'] . "', modified = '" . $data['modified'] . "' WHERE id = $id";
 
 
     $result = mysqli_query($conn, $query);
     if ($result) {
         $response = array(
             'status' => 1,
-            'message' => 'User Updated Successfully.'
+            'message' => 'User Updated Successfully.',
+            'data' => $data
         );
     } else {
         $response = array(
