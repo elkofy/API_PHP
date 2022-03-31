@@ -1,7 +1,7 @@
 <?php
 // Se connecter à la base de données
-include("db_connect.php");
-include("randomToken.php");
+include("./Utils/db_connect.php");
+include("./Utils/randomToken.php");
 $request_method = $_SERVER["REQUEST_METHOD"];
 
 function getProducts()
@@ -37,7 +37,7 @@ function insertProduct()
   if ($result) {
     $response = array(
       'status' => 1,
-      'message' => 'Product Added Successfully.' ,
+      'message' => 'Product Added Successfully.',
       'data' => $data
 
     );
@@ -50,8 +50,6 @@ function insertProduct()
   header('Content-Type: application/json');
   echo json_encode($response, JSON_PRETTY_PRINT);
 }
-
-
 
 function updateProduct($id)
 {
